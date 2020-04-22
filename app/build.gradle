@@ -38,6 +38,7 @@ dependencies {
 
     // Third Party Dependencies
     implementation("com.apollographql.apollo:apollo-runtime:$graph_ql_version")
+    implementation("com.squareup.okhttp3:okhttp:4.5.0")
 
     compileOnly("org.jetbrains:annotations:13.0")
     testCompileOnly("org.jetbrains:annotations:13.0")
