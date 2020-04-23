@@ -1,0 +1,9 @@
+query searchYelp {
+  search(term: "burrito", location: "san francisco", limit: 5) {
+    total
+    business {
+      name
+      url
+    }
+  }
+}
