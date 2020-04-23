@@ -1,10 +1,6 @@
 package com.example.restaurant_search.models
 
-class Restaurant {
-
-    var name: String = ""
-    var address: String = ""
-    var priceRange: String = ""
-    var description: String = ""
-    
-}
+data class Restaurant(val name: String,
+                      val address: String,
+                      val priceRange: String,
+                      val description: String) {}
