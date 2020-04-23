@@ -14,19 +14,23 @@ import okhttp3.OkHttpClient
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var searchYelpQuery: SearchYelpQuery
+//    private lateinit var searchYelpQuery: SearchYelpQuery
+//    private val restaurantListFragment by lazy { RestaurantListFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val recyclerView = RecyclerView(this)
-        recyclerView.adapter = RestaurantListAdapter(listOf(Restaurant("Burrito King",
-        "45 West Street", "", "")))
+        if (savedInstanceState == null) {
+            supportFragmentManager
+                .beginTransaction()
+                .add(R.id.main, RestaurantListFragment.newInstance(), "restaurantList")
+                .commit()
+        }
 
-        yelpRequest()
+
     }
-
+/*
     fun yelpRequest() {
         val url = "https://api.yelp.com/v3/graphql"
 
@@ -57,4 +61,6 @@ class MainActivity : AppCompatActivity() {
         })
 
     }
+
+ */
 }

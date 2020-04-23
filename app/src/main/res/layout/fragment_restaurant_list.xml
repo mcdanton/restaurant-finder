@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <variable
-            name="vm"
-            type="com.example.restaurant_search.view_models.RestaurantViewModel" />
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/restaurant_list_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
+        tools:listitem="@layout/row_restaurant"
         />
 
-
-
-</layout>
+</FrameLayout>
