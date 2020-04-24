@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.restaurant_search.models.Restaurant
-import kotlinx.android.synthetic.main.row_restaurant.view.*
+import kotlinx.android.synthetic.main.item_restaurant.view.*
 
 class RestaurantListAdapter(var items: MutableList<Restaurant>): RecyclerView.Adapter<RestaurantListViewHolder>() {
 
@@ -15,7 +15,7 @@ class RestaurantListAdapter(var items: MutableList<Restaurant>): RecyclerView.Ad
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantListViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val itemView = layoutInflater.inflate(R.layout.row_restaurant, parent, false)
+        val itemView = layoutInflater.inflate(R.layout.item_restaurant, parent, false)
         return RestaurantListViewHolder(itemView)
     }
 

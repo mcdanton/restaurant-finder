@@ -44,9 +44,10 @@ class RestaurantListFragment : Fragment() {
         restaurants = mutableListOf(
             Restaurant("Burrito King", "2779 Mission St, San Francisco, CA ", "$", "7189743574"),
             Restaurant("Bobby's Burritos", "841 Derby Lane, San Francisco, CA ", "$$", "2128394823"),
-            Restaurant("Burritos and More", "142 Oakwood St, San Francisco, C", "$", "5163824204"),
-            Restaurant("Classic Burritos", "2889 Mission St, San Francisco, C", "$$$", "4382938573"),
-            Restaurant("BBQ, Burritos, and Golf", "2889 Mission St, San Francisco, C", "$$", "3249837520")
+            Restaurant("Burritos and More", "142 Oakwood St, San Francisco, CA", "$", "5163824204"),
+            Restaurant("Classic Burritos", "2889 Mission St, San Francisco, CA", "$$$", "4382938573"),
+            Restaurant("BBQ, Burritos, and Golf", "2889 Mission St, San Francisco, CA", "$$", "3249837520"),
+            Restaurant("Tommy's Crazy Delicious Burritos", "419 Apple Drive, San Francisco, CA", "$$$$", "9183941233")
         )
 
 
