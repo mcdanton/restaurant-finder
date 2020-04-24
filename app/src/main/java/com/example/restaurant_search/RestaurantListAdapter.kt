@@ -33,5 +33,8 @@ class RestaurantListViewHolder(private val view: View): RecyclerView.ViewHolder(
 
     fun setupView(item: Restaurant) {
         view.text_view_restaurant_name.text = item.name
+        view.text_view_restaurant_address.text = item.address
+        view.text_view_restaurant_price.text = item.priceRange
+        view.text_view_restaurant_phone.text = item.phoneNumber
     }
 }
