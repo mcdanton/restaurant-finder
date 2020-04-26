@@ -21,7 +21,7 @@ import okhttp3.OkHttpClient
 
 class RestaurantListFragment : Fragment() {
 
-    private lateinit var searchYelpResQuery:SearchYelpResQuery
+//    private lateinit var searchYelpResQuery: SearchYelpResQuery
     private var restaurants = mutableListOf<Restaurant>()
 
 
@@ -56,7 +56,7 @@ class RestaurantListFragment : Fragment() {
     fun yelpRequest() {
         val url = "https://api.yelp.com/v3/graphql"
 
-        searchYelpResQuery = SearchYelpResQuery.builder().build()
+//        searchYelpResQuery = SearchYelpResQuery.builder().build()
 
 
         val okHttpClient = OkHttpClient.Builder()
@@ -69,17 +69,15 @@ class RestaurantListFragment : Fragment() {
             .okHttpClient(okHttpClient)
             .build()
 
-        apolloClient.query(searchYelpResQuery)?.enqueue(object : ApolloCall.Callback<SearchYelpResQuery.Data>() {
+        apolloClient.query(SearchYelpResQuery())?.enqueue(object : ApolloCall.Callback<SearchYelpResQuery.Data>() {
 
             override fun onResponse(response: Response<SearchYelpResQuery.Data>) {
 
                 val jsonString = Gson().toJson(response)
                 val foo = Gson().fromJson(jsonString, Restaurant::class.java)
-//                val gson = GsonBuilder().create()
-//                val restaurant = gson.fromJson(response, Restaurant::class.java)
+
 
                 Log.d("", "${response.data().toString()}")
-//                Log.d("", "restaurant is ${restaurant}")
 
             }
 

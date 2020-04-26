@@ -24,6 +24,10 @@ android {
         }
     }
 
+    apollo {
+        generateKotlinModels.set(true) // or false for Java models
+    }
+
 }
 
 dependencies {
