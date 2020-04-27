@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Burrito Places</string>
+
+    <string name="google_maps_api_key">AIzaSyDKCtvh-OkfjJZfBKFF0AHg6UdBSiaIw94</string>
 </resources>
