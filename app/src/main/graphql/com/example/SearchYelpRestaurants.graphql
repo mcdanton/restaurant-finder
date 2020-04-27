@@ -1,9 +1,20 @@
 query SearchYelpResQuery {
     search(term: "burrito",
-        location: "san francisco",
-        limit: 5) {
+        location: "san francisco") {
         business {
             name
+            price
+            display_phone
+            location {
+                address1
+                address2
+                address3
+                city
+                state
+                postal_code
+                country
+                formatted_address
+            }
         }
     }
 }

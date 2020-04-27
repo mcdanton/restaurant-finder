@@ -4,13 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.restaurant_search.models.Restaurant
+import com.example.SearchYelpResQuery
 import kotlinx.android.synthetic.main.item_restaurant.view.*
 
-class RestaurantListAdapter(var items: MutableList<Restaurant>): RecyclerView.Adapter<RestaurantListViewHolder>() {
+class RestaurantListAdapter(var restaurantListResults: MutableList<SearchYelpResQuery.Business?>): RecyclerView.Adapter<RestaurantListViewHolder>() {
 
     override fun getItemCount(): Int {
-        return items.size
+        return restaurantListResults.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantListViewHolder {
@@ -21,7 +21,7 @@ class RestaurantListAdapter(var items: MutableList<Restaurant>): RecyclerView.Ad
 
     override fun onBindViewHolder(holder: RestaurantListViewHolder, position: Int) {
 
-        val item = items[position]
+        val item = restaurantListResults[position]
 
         holder.setupView(item)
 
@@ -31,10 +31,10 @@ class RestaurantListAdapter(var items: MutableList<Restaurant>): RecyclerView.Ad
 
 class RestaurantListViewHolder(private val view: View): RecyclerView.ViewHolder(view) {
 
-    fun setupView(item: Restaurant) {
-        view.text_view_restaurant_name.text = item.name
-        view.text_view_restaurant_address.text = item.address
-        view.text_view_restaurant_price.text = item.priceRange
-        view.text_view_restaurant_phone.text = item.phoneNumber
+    fun setupView(item: SearchYelpResQuery.Business?) {
+        view.text_view_restaurant_name.text = item?.name
+        view.text_view_restaurant_address.text = item?.location?.address1 ?: "No Address Listed"
+        view.text_view_restaurant_price.text = item?.price ?: "$"
+        view.text_view_restaurant_phone.text = item?.display_phone ?: "No Phone # Listed"
     }
 }
