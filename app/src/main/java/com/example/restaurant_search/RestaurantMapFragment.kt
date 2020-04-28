@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -41,11 +42,17 @@ class RestaurantMapFragment: Fragment(), OnMapReadyCallback {
 
 
     override fun onMapReady(map: GoogleMap) {
+        // Add a marker in Sydney, Australia,
+        // and move the map's camera to the same location.
+        // Add a marker in Sydney, Australia,
+        // and move the map's camera to the same location.
+        val sydney = LatLng(-33.852, 151.211)
         map.addMarker(
-            MarkerOptions()
-                .position(LatLng(0.0, 0.0))
-                .title("Marker")
+            MarkerOptions().position(sydney)
+                .title("Marker in Sydney")
         )
+        val zoomLevel = 16.0f //This goes up to 21
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, zoomLevel))
     }
 
 }

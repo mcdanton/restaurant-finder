@@ -34,7 +34,6 @@ class RestaurantListViewModel() : ViewModel() {
                 // Only checking for null and not empty here
                 // If response is empty and current list of restaurants is not
                 // want to update current list to be empty
-
                 if (response.data()?.search?.business != null) {
                     restaurants.postValue(response.data()!!.search!!.business!!.filter { it?.name != null }.toMutableList())
                 }
