@@ -2,4 +2,7 @@
     <string name="app_name">Burrito Places</string>
 
     <string name="google_maps_api_key">AIzaSyDKCtvh-OkfjJZfBKFF0AHg6UdBSiaIw94</string>
+
+    <string name="restaurant_details_dialog_message">Sorry, no details available for selected restaurant</string>
+    <string name="dialog_confirmation">OK</string>
 </resources>

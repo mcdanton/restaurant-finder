@@ -28,6 +28,10 @@ android {
         generateKotlinModels.set(true) // or false for Java models
     }
 
+    dataBinding {
+        enabled = true
+    }
+
 }
 
 dependencies {

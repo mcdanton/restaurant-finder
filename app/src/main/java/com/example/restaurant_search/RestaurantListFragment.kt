@@ -1,9 +1,11 @@
 package com.example.restaurant_search
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -61,6 +63,24 @@ class RestaurantListFragment : Fragment() {
     }
 
     private fun showRestaurantMap(item: SearchYelpResQuery.Business?) {
+
+        // If long/lat is null, show error to user
+        item?.let {
+            if (item?.coordinates?.longitude == null || item?.coordinates?.latitude == null ) {
+
+                val dialogBuilder = AlertDialog.Builder(activity!!)
+                dialogBuilder.setMessage(R.string.restaurant_details_dialog_message)
+                dialogBuilder.setPositiveButton(
+                    R.string.dialog_confirmation,
+                    DialogInterface.OnClickListener { dialog, _ ->
+                        dialog.dismiss()
+                    })
+
+                dialogBuilder.create().show()
+                return
+            }
+        }
+
         navigationViewModel.updateFragment(R.layout.fragment_restaurant_map, item)
     }
 

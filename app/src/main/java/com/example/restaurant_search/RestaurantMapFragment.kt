@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
+import com.example.restaurant_search.databinding.FragmentRestaurantMapBinding
 import com.example.restaurant_search.view_models.NavigationViewModel
+import com.example.restaurant_search.view_models.RestaurantViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -18,7 +20,9 @@ import com.google.android.gms.maps.model.MarkerOptions
 
 class RestaurantMapFragment: Fragment(), OnMapReadyCallback {
 
+    private lateinit var binding: FragmentRestaurantMapBinding
     private lateinit var supportMapFragment: SupportMapFragment
+    private lateinit var viewModel: RestaurantViewModel
     private lateinit var navigationViewModel: NavigationViewModel
 
 
@@ -26,8 +30,12 @@ class RestaurantMapFragment: Fragment(), OnMapReadyCallback {
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        val view =  inflater.inflate(R.layout.fragment_restaurant_map, container, false)
-        return view
+        binding = FragmentRestaurantMapBinding.inflate(inflater, container, false)
+
+        binding.lifecycleOwner = this
+        binding.vm = viewModel
+
+        return binding.root
 
     }
 
@@ -35,13 +43,13 @@ class RestaurantMapFragment: Fragment(), OnMapReadyCallback {
         super.onActivityCreated(savedInstanceState)
 
         val fm: FragmentManager = childFragmentManager
-        var fragment = fm.findFragmentById(R.id.map) as SupportMapFragment
-        if (fragment == null) {
-            fragment = SupportMapFragment.newInstance()
-            fm.beginTransaction().replace(R.id.main, fragment).commit()
+        supportMapFragment = fm.findFragmentById(R.id.map) as SupportMapFragment
+        if (supportMapFragment == null) {
+            supportMapFragment = SupportMapFragment.newInstance()
+            fm.beginTransaction().replace(R.id.main, supportMapFragment).commit()
         }
 
-        fragment.getMapAsync(this)
+        supportMapFragment.getMapAsync(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,20 +59,27 @@ class RestaurantMapFragment: Fragment(), OnMapReadyCallback {
             ViewModelProvider(this).get(NavigationViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
 
+        viewModel = RestaurantViewModel(navigationViewModel.selectedRestaurant!!)
+
     }
 
 
     override fun onMapReady(map: GoogleMap) {
-        val restaurantCoords = navigationViewModel.selectedRestaurant?.coordinates
-        if (restaurantCoords?.longitude != null && restaurantCoords?.latitude != null) {
-            val longLat = LatLng(restaurantCoords!!.latitude!!, restaurantCoords!!.longitude!!)
-            map.addMarker(
-                MarkerOptions().position(longLat)
-                    .title(navigationViewModel.selectedRestaurant?.name)
-            )
-            val zoomLevel = 17.0f //This goes up to 21
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(longLat, zoomLevel))
+
+        navigationViewModel.selectedRestaurant?.let {
+
+            if (it.latitude != null && it.longitude != null) {
+                val longLat = LatLng(it.latitude, it.longitude)
+                map.addMarker(
+                    MarkerOptions().position(longLat)
+                        .title(it.name)
+                )
+                val zoomLevel = 17.0f //This goes up to 21
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(longLat, zoomLevel))
+
+            }
         }
+
     }
 
 }

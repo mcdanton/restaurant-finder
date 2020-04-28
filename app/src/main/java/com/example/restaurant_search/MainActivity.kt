@@ -25,7 +25,10 @@ class MainActivity : AppCompatActivity() {
             navigationViewModel.fragmentId.observe(this, Observer {
                 replaceFragment(
                     when(it) {
-                        R.layout.fragment_restaurant_map -> restaurantMapFragment
+                        R.layout.fragment_restaurant_map -> {
+                            if (navigationViewModel.selectedRestaurant == null) return@Observer
+                            restaurantMapFragment
+                        }
                         else -> restaurantListFragment
                     }
                 )
@@ -36,9 +39,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.main, fragment)
-            .commit()
+            .beginTransaction().apply {
+                replace(R.id.main, fragment)
+                addToBackStack(this::class.java.simpleName)
+                commit()
+            }
     }
 
 }
