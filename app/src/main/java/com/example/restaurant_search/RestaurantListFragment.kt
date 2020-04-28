@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.SearchYelpResQuery
 import com.example.restaurant_search.view_models.NavigationViewModel
 import com.example.restaurant_search.view_models.RestaurantListViewModel
 
@@ -59,9 +60,8 @@ class RestaurantListFragment : Fragment() {
 
     }
 
-    private fun showRestaurantMap() {
-        navigationViewModel.updateFragmentId(R.layout.fragment_restaurant_map)
+    private fun showRestaurantMap(item: SearchYelpResQuery.Business?) {
+        navigationViewModel.updateFragment(R.layout.fragment_restaurant_map, item)
     }
-
 
 }

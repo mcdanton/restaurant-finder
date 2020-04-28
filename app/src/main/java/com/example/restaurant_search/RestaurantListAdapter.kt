@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.item_restaurant.view.*
 
 class RestaurantListAdapter(
     var restaurantListResults: MutableList<SearchYelpResQuery.Business?>,
-    val onItemClick: (() -> Unit)? = null
+    val onItemClick: ((SearchYelpResQuery.Business?) -> Unit)? = null
 ): RecyclerView.Adapter<RestaurantListViewHolder>() {
 
     override fun getItemCount(): Int {
@@ -29,7 +29,7 @@ class RestaurantListAdapter(
 
         holder.itemView.apply {
             setOnClickListener {
-                onItemClick?.invoke()
+                onItemClick?.invoke(item)
             }
         }
 

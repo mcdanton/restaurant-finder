@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.ViewModelProvider
+import com.example.restaurant_search.view_models.NavigationViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -17,6 +19,8 @@ import com.google.android.gms.maps.model.MarkerOptions
 class RestaurantMapFragment: Fragment(), OnMapReadyCallback {
 
     private lateinit var supportMapFragment: SupportMapFragment
+    private lateinit var navigationViewModel: NavigationViewModel
+
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -40,19 +44,27 @@ class RestaurantMapFragment: Fragment(), OnMapReadyCallback {
         fragment.getMapAsync(this)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        navigationViewModel = activity?.run {
+            ViewModelProvider(this).get(NavigationViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
+
+    }
+
 
     override fun onMapReady(map: GoogleMap) {
-        // Add a marker in Sydney, Australia,
-        // and move the map's camera to the same location.
-        // Add a marker in Sydney, Australia,
-        // and move the map's camera to the same location.
-        val sydney = LatLng(-33.852, 151.211)
-        map.addMarker(
-            MarkerOptions().position(sydney)
-                .title("Marker in Sydney")
-        )
-        val zoomLevel = 16.0f //This goes up to 21
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, zoomLevel))
+        val restaurantCoords = navigationViewModel.selectedRestaurant?.coordinates
+        if (restaurantCoords?.longitude != null && restaurantCoords?.latitude != null) {
+            val longLat = LatLng(restaurantCoords!!.latitude!!, restaurantCoords!!.longitude!!)
+            map.addMarker(
+                MarkerOptions().position(longLat)
+                    .title(navigationViewModel.selectedRestaurant?.name)
+            )
+            val zoomLevel = 17.0f //This goes up to 21
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(longLat, zoomLevel))
+        }
     }
 
 }

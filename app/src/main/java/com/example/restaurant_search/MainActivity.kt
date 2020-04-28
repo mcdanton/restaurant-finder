@@ -9,7 +9,7 @@ import com.example.restaurant_search.view_models.NavigationViewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: NavigationViewModel
+    private lateinit var navigationViewModel: NavigationViewModel
     private val restaurantListFragment by lazy { RestaurantListFragment() }
     private val restaurantMapFragment by lazy { RestaurantMapFragment() }
 
@@ -19,10 +19,10 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
 
-            viewModel = ViewModelProvider(this).get(NavigationViewModel::class.java)
+            navigationViewModel = ViewModelProvider(this).get(NavigationViewModel::class.java)
 
 
-            viewModel.fragmentId.observe(this, Observer {
+            navigationViewModel.fragmentId.observe(this, Observer {
                 replaceFragment(
                     when(it) {
                         R.layout.fragment_restaurant_map -> restaurantMapFragment

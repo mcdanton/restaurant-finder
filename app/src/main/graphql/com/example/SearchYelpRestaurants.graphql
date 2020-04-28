@@ -15,6 +15,10 @@ query SearchYelpResQuery {
                 country
                 formatted_address
             }
+            coordinates {
+                latitude
+                longitude
+            }
         }
     }
 }
