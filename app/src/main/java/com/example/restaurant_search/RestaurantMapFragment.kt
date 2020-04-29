@@ -25,6 +25,18 @@ class RestaurantMapFragment: Fragment(), OnMapReadyCallback {
     private lateinit var viewModel: RestaurantViewModel
     private lateinit var navigationViewModel: NavigationViewModel
 
+    //region Lifecycle
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        navigationViewModel = activity?.run {
+            ViewModelProvider(this).get(NavigationViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
+
+        viewModel = RestaurantViewModel(navigationViewModel.selectedRestaurant!!)
+
+    }
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -44,25 +56,14 @@ class RestaurantMapFragment: Fragment(), OnMapReadyCallback {
 
         val fm: FragmentManager = childFragmentManager
         supportMapFragment = fm.findFragmentById(R.id.map) as SupportMapFragment
-        if (supportMapFragment == null) {
-            supportMapFragment = SupportMapFragment.newInstance()
-            fm.beginTransaction().replace(R.id.main, supportMapFragment).commit()
-        }
 
         supportMapFragment.getMapAsync(this)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        navigationViewModel = activity?.run {
-            ViewModelProvider(this).get(NavigationViewModel::class.java)
-        } ?: throw Exception("Invalid Activity")
-
-        viewModel = RestaurantViewModel(navigationViewModel.selectedRestaurant!!)
 
     }
 
+    //endregion Lifecycle
+
+    //region MapSetup
 
     override fun onMapReady(map: GoogleMap) {
 
@@ -81,5 +82,8 @@ class RestaurantMapFragment: Fragment(), OnMapReadyCallback {
         }
 
     }
+
+    //endregion MapSetup
+
 
 }

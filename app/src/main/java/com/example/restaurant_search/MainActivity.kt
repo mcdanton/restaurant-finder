@@ -2,6 +2,7 @@ package com.example.restaurant_search
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +14,8 @@ class MainActivity : AppCompatActivity() {
     private val restaurantListFragment by lazy { RestaurantListFragment() }
     private val restaurantMapFragment by lazy { RestaurantMapFragment() }
 
+    //region Lifecycle
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -21,29 +24,77 @@ class MainActivity : AppCompatActivity() {
 
             navigationViewModel = ViewModelProvider(this).get(NavigationViewModel::class.java)
 
-
             navigationViewModel.fragmentId.observe(this, Observer {
-                replaceFragment(
-                    when(it) {
-                        R.layout.fragment_restaurant_map -> {
-                            if (navigationViewModel.selectedRestaurant == null) return@Observer
-                            restaurantMapFragment
-                        }
-                        else -> restaurantListFragment
-                    }
-                )
+                replaceFragment(it, navigationViewModel.selectedRestaurant?.name)
             })
+
         }
 
     }
 
-    private fun replaceFragment(fragment: Fragment) {
+    //endregion Lifecycle
+
+    //region Event Handling
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item?.itemId == android.R.id.home) {
+            navigationViewModel.updateFragment(R.layout.fragment_restaurant_list, null)
+            return true
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        if (navigationViewModel.fragmentId.value == R.layout.fragment_restaurant_map) {
+            navigationViewModel.updateFragment(R.layout.fragment_restaurant_list, null)
+            super.onBackPressed()
+        }
+    }
+
+    private fun replaceFragment(fragmentId: Int?, fragmentTitle: String? = null) {
+
+        // Include "extra" case here for safety in case unsupported Frag Id passed
+        val fragment = when(fragmentId) {
+            R.layout.fragment_restaurant_map -> {
+                supportActionBar?.setDisplayHomeAsUpEnabled(true)
+                restaurantMapFragment
+            }
+            R.layout.fragment_restaurant_list -> {
+                supportActionBar?.setDisplayHomeAsUpEnabled(false)
+                restaurantListFragment
+            }
+            else -> {
+                supportActionBar?.setDisplayHomeAsUpEnabled(false)
+                restaurantListFragment
+            }
+        }
+
+        supportFragmentManager.popBackStack(this::class.java.simpleName, 0)
         supportFragmentManager
             .beginTransaction().apply {
                 replace(R.id.main, fragment)
+                title = fragmentTitle ?: getString(R.string.app_name)
                 addToBackStack(this::class.java.simpleName)
                 commit()
             }
     }
+
+    //endregion Event Handling
+
+    //region Helpers
+
+    private fun fragFromId(fragId: Int?) : Fragment {
+
+        return when (fragId) {
+            R.layout.fragment_restaurant_list -> restaurantListFragment
+            R.layout.fragment_restaurant_map -> restaurantMapFragment
+            else -> restaurantListFragment
+        }
+
+    }
+
+
+    //endregion Helpers
 
 }

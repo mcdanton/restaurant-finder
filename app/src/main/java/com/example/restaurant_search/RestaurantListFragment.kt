@@ -23,6 +23,16 @@ class RestaurantListFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private var adapter: RestaurantListAdapter? = null
 
+    //region Lifecycle
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        navigationViewModel = activity?.run {
+            ViewModelProvider(this).get(NavigationViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
+
+    }
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -53,20 +63,16 @@ class RestaurantListFragment : Fragment() {
         })
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    //endregion Lifecycle
 
-        navigationViewModel = activity?.run {
-            ViewModelProvider(this).get(NavigationViewModel::class.java)
-        } ?: throw Exception("Invalid Activity")
-
-    }
+    //region Adapter Interaction
 
     private fun showRestaurantMap(item: SearchYelpResQuery.Business?) {
 
+        // Ensure item is not null (shouldn't be possible but always good to handle just in case)
         // If long/lat is null, show error to user
         item?.let {
-            if (item?.coordinates?.longitude == null || item?.coordinates?.latitude == null ) {
+            if (item.coordinates?.longitude == null || item.coordinates?.latitude == null ) {
 
                 val dialogBuilder = AlertDialog.Builder(activity!!)
                 dialogBuilder.setMessage(R.string.restaurant_details_dialog_message)
@@ -79,9 +85,13 @@ class RestaurantListFragment : Fragment() {
                 dialogBuilder.create().show()
                 return
             }
+
+            navigationViewModel.updateFragment(R.layout.fragment_restaurant_map, item)
+
         }
 
-        navigationViewModel.updateFragment(R.layout.fragment_restaurant_map, item)
     }
+
+    //endregion Adapter Interaction
 
 }
