@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.restaurant_search"
-        minSdkVersion 16
+        minSdkVersion 20
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -41,6 +41,7 @@ dependencies {
     def version_ok_http = "4.5.0"
     def version_play_services_maps = "17.0.0"
     def version_play_services_location = "17.0.0"
+    def version_sagar_dsl_perms = "2.0.1"
 
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -58,6 +59,7 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:$version_ok_http"
     implementation "com.google.android.gms:play-services-maps:$version_play_services_maps"
     implementation "com.google.android.gms:play-services-location:$version_play_services_location"
+    implementation "com.sagar:dslpermission:$version_sagar_dsl_perms"
 
 
     compileOnly 'org.jetbrains:annotations:13.0'
