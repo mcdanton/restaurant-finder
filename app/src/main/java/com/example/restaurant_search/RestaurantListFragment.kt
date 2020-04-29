@@ -1,6 +1,7 @@
 package com.example.restaurant_search
 
 import android.content.DialogInterface
+import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.SearchYelpResQuery
 import com.example.restaurant_search.view_models.NavigationViewModel
 import com.example.restaurant_search.view_models.RestaurantListViewModel
+import com.google.android.gms.location.FusedLocationProviderClient
 
 
 class RestaurantListFragment : Fragment() {
@@ -22,6 +24,8 @@ class RestaurantListFragment : Fragment() {
     private lateinit var navigationViewModel: NavigationViewModel
     private lateinit var recyclerView: RecyclerView
     private var adapter: RestaurantListAdapter? = null
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+
 
     //region Lifecycle
 
@@ -51,7 +55,18 @@ class RestaurantListFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = RestaurantListViewModel()
-        viewModel.fetchBurritoRestaurants()
+
+        fusedLocationClient = FusedLocationProviderClient(activity!!)
+
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location : Location? ->
+                navigationViewModel.userLocation = location
+
+                viewModel.fetchBurritoRestaurants(getString(R.string.yelp_search_term),
+                    navigationViewModel.userLocation?.latitude ?: 40.7484,
+                    navigationViewModel.userLocation?.longitude ?: 73.9857)
+            }
+
 
         viewModel.restaurants.observe(viewLifecycleOwner, Observer {
 

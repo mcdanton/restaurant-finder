@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navigationViewModel: NavigationViewModel
     private val restaurantListFragment by lazy { RestaurantListFragment() }
     private val restaurantMapFragment by lazy { RestaurantMapFragment() }
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
 //    val PERMISSION_ID = 44
 
@@ -41,13 +40,6 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
 
             navigationViewModel = ViewModelProvider(this).get(NavigationViewModel::class.java)
-
-            fusedLocationClient = FusedLocationProviderClient(this)
-
-            fusedLocationClient.lastLocation
-                .addOnSuccessListener { location : Location? ->
-                    navigationViewModel.userLocation = location
-                }
 
             navigationViewModel.fragmentId.observe(this, Observer {
                 replaceFragment(it, navigationViewModel.selectedRestaurant?.name)
