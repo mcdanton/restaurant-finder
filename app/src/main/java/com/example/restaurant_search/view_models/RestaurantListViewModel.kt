@@ -15,7 +15,7 @@ class RestaurantListViewModel() : ViewModel() {
 
     var restaurants: MutableLiveData<MutableList<SearchYelpResQuery.Business?>> = MutableLiveData()
 
-    fun fetchBurritoRestaurants() {
+    fun fetchBurritoRestaurants(restaurantType: String, searchLatitude: Double, searchLongitude: Double) {
         val url = "https://api.yelp.com/v3/graphql"
 
         val okHttpClient = OkHttpClient.Builder()
@@ -27,14 +27,13 @@ class RestaurantListViewModel() : ViewModel() {
             .okHttpClient(okHttpClient)
             .build()
 
-        apolloClient.query(SearchYelpResQuery())?.enqueue(object : ApolloCall.Callback<SearchYelpResQuery.Data>() {
+        apolloClient.query(SearchYelpResQuery(restaurantType, searchLatitude, searchLongitude))?.enqueue(object : ApolloCall.Callback<SearchYelpResQuery.Data>() {
 
             override fun onResponse(response: Response<SearchYelpResQuery.Data>) {
 
                 // Only checking for null and not empty here
                 // If response is empty and current list of restaurants is not
                 // want to update current list to be empty
-
                 if (response.data()?.search?.business != null) {
                     restaurants.postValue(response.data()!!.search!!.business!!.filter { it?.name != null }.toMutableList())
                 }

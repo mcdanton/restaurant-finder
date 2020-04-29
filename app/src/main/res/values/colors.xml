@@ -7,5 +7,7 @@
     <color name="black">#000000</color>
     <color name="purple">#6E00FF</color>
     <color name="grey">#EFF0F1</color>
+    <color name="white">#FFFFFF</color>
+
 
 </resources>
