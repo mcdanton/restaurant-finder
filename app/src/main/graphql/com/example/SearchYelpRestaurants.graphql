@@ -1,6 +1,5 @@
-query SearchYelpResQuery {
-    search(term: "burrito",
-        location: "san francisco") {
+query SearchYelpResQuery($restaurantType: String!, $latitude: Float!, $longitude: Float!) {
+    search(term: $restaurantType, latitude: $latitude, longitude: $longitude) {
         business {
             name
             price

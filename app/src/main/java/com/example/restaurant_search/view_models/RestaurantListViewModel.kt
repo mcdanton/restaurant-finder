@@ -27,7 +27,7 @@ class RestaurantListViewModel() : ViewModel() {
             .okHttpClient(okHttpClient)
             .build()
 
-        apolloClient.query(SearchYelpResQuery())?.enqueue(object : ApolloCall.Callback<SearchYelpResQuery.Data>() {
+        apolloClient.query(SearchYelpResQuery("burrito", 40.6178292, -73.7316214))?.enqueue(object : ApolloCall.Callback<SearchYelpResQuery.Data>() {
 
             override fun onResponse(response: Response<SearchYelpResQuery.Data>) {
 
