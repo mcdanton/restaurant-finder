@@ -47,20 +47,12 @@
                     android:id="@+id/text_view_restaurant_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="4dp"
+                    android:layout_marginRight="16dp"
                     android:textSize="24sp"
                     android:textColor="@color/white"
                     android:textStyle="bold"
                     android:text="@{vm.priceLabel}"
                     tools:text="$$" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="4dp"
-                    android:textSize="24sp"
-                    android:textColor="@color/white"
-                    tools:text="º" />
 
                 <TextView
                     android:id="@+id/text_view_restaurant_phone"

@@ -55,13 +55,6 @@
                     tools:text="$$" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="4dp"
-                    android:textSize="16sp"
-                    tools:text="º" />
-
-                <TextView
                     android:id="@+id/text_view_restaurant_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
