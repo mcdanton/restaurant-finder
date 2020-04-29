@@ -1,18 +1,36 @@
 package com.example.restaurant_search
 
-import androidx.appcompat.app.AppCompatActivity
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
+import android.os.Looper
 import android.view.MenuItem
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.restaurant_search.view_models.NavigationViewModel
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
+
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var navigationViewModel: NavigationViewModel
     private val restaurantListFragment by lazy { RestaurantListFragment() }
     private val restaurantMapFragment by lazy { RestaurantMapFragment() }
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+//    val PERMISSION_ID = 44
+
 
     //region Lifecycle
 
@@ -23,6 +41,13 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
 
             navigationViewModel = ViewModelProvider(this).get(NavigationViewModel::class.java)
+
+            fusedLocationClient = FusedLocationProviderClient(this)
+
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { location : Location? ->
+                    navigationViewModel.userLocation = location
+                }
 
             navigationViewModel.fragmentId.observe(this, Observer {
                 replaceFragment(it, navigationViewModel.selectedRestaurant?.name)
@@ -96,5 +121,93 @@ class MainActivity : AppCompatActivity() {
 
 
     //endregion Helpers
+
+    //region Location Management
+
+    /*
+    private fun checkPermissions(): Boolean {
+        return ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ),
+            PERMISSION_ID
+        )
+    }
+
+    private fun isLocationEnabled(): Boolean {
+        val locationManager =
+            getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                locationManager.isProviderEnabled(
+                    LocationManager.NETWORK_PROVIDER
+                )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == PERMISSION_ID) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Granted. Start getting the location information
+            }
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun getLastLocation() {
+        if (checkPermissions()) {
+            if (isLocationEnabled()) {
+                fusedLocationClient.lastLocation.addOnCompleteListener { task ->
+                    val location: Location? = task.result
+                    if (location == null) {
+                        requestNewLocationData()
+                    } else {
+//                        latTextView.setText(location.getLatitude().toString() + "")
+//                        lonTextView.setText(location.getLongitude().toString() + "")
+                    }
+                }
+            } else {
+                Toast.makeText(this, "Turn on location", Toast.LENGTH_LONG).show()
+                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                startActivity(intent)
+            }
+        } else {
+            requestPermissions()
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun requestNewLocationData() {
+        val locationRequest = LocationRequest()
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest.interval = 0
+        locationRequest.fastestInterval = 0
+        locationRequest.numUpdates = 1
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        mFusedLocationClient.requestLocationUpdates(
+            locationRequest, mLocationCallback,
+            Looper.myLooper()
+        )
+    }
+    */
+
+    //endregion Location Management
 
 }

@@ -1,5 +1,6 @@
 package com.example.restaurant_search.view_models
 
+import android.location.Location
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.SearchYelpResQuery
@@ -10,6 +11,7 @@ class NavigationViewModel : ViewModel() {
 
     val fragmentId = MutableLiveData<Int>((R.layout.fragment_restaurant_list))
     var selectedRestaurant: Restaurant? = null
+    var userLocation: Location? = null
 
 
     fun updateFragment(id: Int, restaurant: SearchYelpResQuery.Business?) {

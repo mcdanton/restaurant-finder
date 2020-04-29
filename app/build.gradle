@@ -36,7 +36,12 @@ android {
 
 dependencies {
 
-    def graph_ql_version = "1.4.5"
+    // Version Management
+    def version_graph_ql = "1.4.5"
+    def version_ok_http = "4.5.0"
+    def version_play_services_maps = "17.0.0"
+    def version_play_services_location = "17.0.0"
+
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -49,10 +54,10 @@ dependencies {
 
 
     // Third Party Dependencies
-    implementation "com.apollographql.apollo:apollo-runtime:$graph_ql_version"
-    implementation 'com.squareup.okhttp3:okhttp:4.5.0'
-    implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation "com.apollographql.apollo:apollo-runtime:$version_graph_ql"
+    implementation "com.squareup.okhttp3:okhttp:$version_ok_http"
+    implementation "com.google.android.gms:play-services-maps:$version_play_services_maps"
+    implementation "com.google.android.gms:play-services-location:$version_play_services_location"
 
 
     compileOnly 'org.jetbrains:annotations:13.0'
