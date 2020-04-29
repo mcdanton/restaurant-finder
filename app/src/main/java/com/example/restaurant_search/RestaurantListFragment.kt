@@ -32,7 +32,8 @@ class RestaurantListFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private var adapter: RestaurantListAdapter? = null
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-
+    private val defaultLat: Double = 40.7484
+    private val defaultLong: Double = -73.9857
 
     //region Lifecycle
 
@@ -85,8 +86,8 @@ class RestaurantListFragment : Fragment() {
                     Log.d("", "#### lat: ${navigationViewModel.userLocation?.latitude}, long: ${navigationViewModel.userLocation?.longitude}")
 
                     viewModel.fetchBurritoRestaurants(getString(R.string.yelp_search_term),
-                        navigationViewModel.userLocation?.latitude ?: 73.9857,
-                        navigationViewModel.userLocation?.longitude ?: 40.7484)
+                        navigationViewModel.userLocation?.latitude ?: defaultLat,
+                        navigationViewModel.userLocation?.longitude ?: defaultLong)
                 }
         }
 
@@ -137,9 +138,6 @@ class RestaurantListFragment : Fragment() {
             setMessage(R.string.permission_needed_dialog_message)
         }
 
-        val lat: Double = 73.9857
-        val long: Double = 40.7484
-
         requestPermissions(
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION
@@ -154,11 +152,11 @@ class RestaurantListFragment : Fragment() {
                             .addOnSuccessListener { location : Location? ->
                                 navigationViewModel.userLocation = location
 
-                                Log.d("", "#### lat: ${navigationViewModel.userLocation?.latitude}, long: ${navigationViewModel.userLocation?.longitude}")
+                                Log.d("", "User Location is lat: ${navigationViewModel.userLocation?.latitude}, long: ${navigationViewModel.userLocation?.longitude}")
 
                                 viewModel.fetchBurritoRestaurants(getString(R.string.yelp_search_term),
-                                    navigationViewModel.userLocation?.latitude ?: 73.9857,
-                                    navigationViewModel.userLocation?.longitude ?: 40.7484)
+                                    navigationViewModel.userLocation?.latitude ?: defaultLat,
+                                    navigationViewModel.userLocation?.longitude ?: defaultLong)
                             }
                     }
                     is PermissionResult.PermissionDenied -> {
