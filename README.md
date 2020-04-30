@@ -1,6 +1,9 @@
-# Project Title
+# Burrito Buddy
 
-Burrito Buddy (trademark pending) searches Yelp for restaurants that serve burritos within a 12 mile radius of you. After grabbing your location, BB (Burrito Buddy) will list all nearby burrito joints. Simply click on one to see it on Google Maps with more details. 
+Burrito Buddy (trademark pending) searches Yelp for restaurants that serve burritos within a 12 mile radius of you. After grabbing your location, Burrito Buddy will list all nearby burrito joints. Simply click on one to see it on Google Maps with more details. 
+
+<img src="app/src/main/res/drawable/burrito_list.jpg" width=200>
+<img src="app/src/main/res/drawable/burrito_map.jpg" width=200>
 
 ## Getting Started
 
@@ -8,14 +11,6 @@ Burrito Buddy (trademark pending) searches Yelp for restaurants that serve burri
 2. Be sure to run on a phone so it can get your real location. If you must use an emulator be sure to enable the location feature.
 3. Run the app and accept location permission prompt.
 4. Find and enjoy some burritos.
-
-### Screenshots
-
-
-```
-Give examples
-```
-
 
 ## App Architecture
 
