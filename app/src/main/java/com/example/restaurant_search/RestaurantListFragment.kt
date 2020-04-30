@@ -95,10 +95,29 @@ class RestaurantListFragment : Fragment() {
         viewModel.restaurants.observe(viewLifecycleOwner, Observer {
 
             activity!!.runOnUiThread {
+
+                Log.d("User Location", "User Location is lat: ${navigationViewModel.userLocation?.latitude}, long: ${navigationViewModel.userLocation?.longitude}")
+
                 recyclerView.adapter = RestaurantListAdapter(it, ::showRestaurantMap)
                 adapter?.notifyDataSetChanged()
             }
 
+        })
+
+        viewModel.error.observe(viewLifecycleOwner, Observer {
+
+            activity!!.runOnUiThread {
+
+                val dialogBuilder = AlertDialog.Builder(activity!!)
+                dialogBuilder.setMessage(R.string.apollo_error_dialog_message)
+                dialogBuilder.setPositiveButton(
+                    R.string.dialog_confirmation,
+                    DialogInterface.OnClickListener { dialog, _ ->
+                        dialog.dismiss()
+                    })
+
+                dialogBuilder.create().show()
+            }
         })
     }
 
@@ -151,8 +170,6 @@ class RestaurantListFragment : Fragment() {
                         fusedLocationClient.lastLocation
                             .addOnSuccessListener { location : Location? ->
                                 navigationViewModel.userLocation = location
-
-                                Log.d("", "User Location is lat: ${navigationViewModel.userLocation?.latitude}, long: ${navigationViewModel.userLocation?.longitude}")
 
                                 viewModel.fetchBurritoRestaurants(getString(R.string.yelp_search_term),
                                     navigationViewModel.userLocation?.latitude ?: defaultLat,

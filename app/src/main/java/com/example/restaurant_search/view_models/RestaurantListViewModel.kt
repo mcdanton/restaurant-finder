@@ -4,28 +4,19 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.apollographql.apollo.ApolloCall
-import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.exception.ApolloException
 import com.example.SearchYelpResQuery
-import com.example.restaurant_search.AuthInterceptor
-import okhttp3.OkHttpClient
+import com.example.restaurant_search.shared.SharedApolloClient
 
 class RestaurantListViewModel() : ViewModel() {
 
-    var restaurants: MutableLiveData<MutableList<SearchYelpResQuery.Business?>> = MutableLiveData()
+    val restaurants: MutableLiveData<MutableList<SearchYelpResQuery.Business?>> = MutableLiveData()
+    val error = MutableLiveData<Exception>()
 
     fun fetchBurritoRestaurants(restaurantType: String, searchLatitude: Double, searchLongitude: Double) {
-        val url = "https://api.yelp.com/v3/graphql"
 
-        val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor(AuthInterceptor())
-            .build()
-
-        val apolloClient = ApolloClient.builder()
-            .serverUrl(url)
-            .okHttpClient(okHttpClient)
-            .build()
+        val apolloClient = SharedApolloClient.singleton
 
         apolloClient.query(SearchYelpResQuery(restaurantType, searchLatitude, searchLongitude))?.enqueue(object : ApolloCall.Callback<SearchYelpResQuery.Data>() {
 
