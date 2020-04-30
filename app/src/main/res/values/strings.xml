@@ -1,3 +1,17 @@
 <resources>
-    <string name="app_name">restaurant-search</string>
+    <string name="app_name">Burrito Places</string>
+
+
+    <string name="yelp_search_term">burrito</string>
+
+
+    <string name="permission_needed_dialog_message">We require your location to find nearby Burrito restaurants</string>
+
+    <string name="restaurant_details_dialog_message">Sorry, no details available for selected restaurant</string>
+    <string name="dialog_confirmation">OK</string>
+
+    <string name="apollo_error_dialog_message">Whoops, something went wrong fetching your restaurants. Please try again later.</string>
+
+    <string name="no_search_results_message">We didn\'t find any burrito restaurants in your area. This could be a good opportunity for you! </string>
+
 </resources>

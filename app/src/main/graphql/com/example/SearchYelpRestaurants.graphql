@@ -1,0 +1,23 @@
+query SearchYelpResQuery($restaurantType: String!, $latitude: Float!, $longitude: Float!) {
+    search(term: $restaurantType, latitude: $latitude, longitude: $longitude, radius: 19312) {
+        business {
+            name
+            price
+            display_phone
+            location {
+                address1
+                address2
+                address3
+                city
+                state
+                postal_code
+                country
+                formatted_address
+            }
+            coordinates {
+                latitude
+                longitude
+            }
+        }
+    }
+}

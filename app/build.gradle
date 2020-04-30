@@ -1,6 +1,12 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.apollographql.apollo'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+
+
+def apiKeyPropertiesFile = rootProject.file("apikeys.properties")
+def apiKeyProperties = new Properties()
+apiKeyProperties.load(new FileInputStream(apiKeyPropertiesFile))
 
 android {
     compileSdkVersion 28
@@ -8,10 +14,15 @@ android {
 
     defaultConfig {
         applicationId "com.example.restaurant_search"
-        minSdkVersion 16
+        minSdkVersion 20
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+
+        buildConfigField("String", "YELP_KEY", apiKeyProperties['YELP_KEY'])
+        buildConfigField("String", "YELP_CLIENT_ID", apiKeyProperties['YELP_CLIENT_ID'])
+        buildConfigField("String", "GOOGLE_MAPS_KEY", apiKeyProperties['GOOGLE_MAPS_KEY'])
+        resValue "string", "google_maps_key", apiKeyProperties['GOOGLE_MAPS_KEY']
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -23,14 +34,48 @@ android {
         }
     }
 
+    apollo {
+        generateKotlinModels.set(true) // or false for Java models
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
 }
 
 dependencies {
+
+    // Version Management
+    def version_graph_ql = "1.4.5"
+    def version_ok_http = "4.5.0"
+    def version_play_services_maps = "17.0.0"
+    def version_play_services_location = "17.0.0"
+    def version_sagar_dsl_perms = "2.0.1"
+
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+
+
+    // Third Party Dependencies
+    implementation "com.apollographql.apollo:apollo-runtime:$version_graph_ql"
+    implementation "com.squareup.okhttp3:okhttp:$version_ok_http"
+    implementation "com.google.android.gms:play-services-maps:$version_play_services_maps"
+    implementation "com.google.android.gms:play-services-location:$version_play_services_location"
+    implementation "com.sagar:dslpermission:$version_sagar_dsl_perms"
+
+
+    compileOnly 'org.jetbrains:annotations:13.0'
+    testCompileOnly 'org.jetbrains:annotations:13.0'
+
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
