@@ -9,7 +9,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -23,6 +22,7 @@ import com.example.SearchYelpResQuery
 import com.example.restaurant_search.view_models.NavigationViewModel
 import com.example.restaurant_search.view_models.RestaurantListViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
+import kotlinx.android.synthetic.main.fragment_restaurant_list.*
 
 
 class RestaurantListFragment : Fragment() {
@@ -100,6 +100,12 @@ class RestaurantListFragment : Fragment() {
 
                 recyclerView.adapter = RestaurantListAdapter(it, ::showRestaurantMap)
                 adapter?.notifyDataSetChanged()
+
+                if(it.isNullOrEmpty())
+                    layout_no_restaurants_found.visibility = View.VISIBLE
+                else
+                    layout_no_restaurants_found.visibility = View.GONE
+
             }
 
         })
