@@ -2,8 +2,7 @@
 
 Burrito Buddy (trademark pending) searches Yelp for restaurants that serve burritos within a 12 mile radius of you. After grabbing your location, Burrito Buddy will list all nearby burrito joints. Simply click on one to see it on Google Maps with more details. 
 
-<img src="app/src/main/res/drawable/burrito_list.jpg" width=200>
-<img src="app/src/main/res/drawable/burrito_map.jpg" width=200>
+<img src="app/src/main/res/drawable/burrito_list.jpg" width=200> <img src="app/src/main/res/drawable/burrito_map.jpg" width=200>
 
 ## Getting Started
 
