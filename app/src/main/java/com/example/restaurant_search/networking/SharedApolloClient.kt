@@ -1,4 +1,4 @@
-package com.example.restaurant_search.shared
+package com.example.restaurant_search.networking
 
 import com.apollographql.apollo.ApolloClient
 

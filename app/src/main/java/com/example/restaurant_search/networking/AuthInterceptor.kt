@@ -1,5 +1,6 @@
-package com.example.restaurant_search
+package com.example.restaurant_search.networking
 
+import com.example.restaurant_search.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.Response
 

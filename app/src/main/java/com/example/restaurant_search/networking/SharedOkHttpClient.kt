@@ -1,6 +1,5 @@
-package com.example.restaurant_search.shared
+package com.example.restaurant_search.networking
 
-import com.example.restaurant_search.AuthInterceptor
 import okhttp3.OkHttpClient
 
 object SharedOkHttpClient {

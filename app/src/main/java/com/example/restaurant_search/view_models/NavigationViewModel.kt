@@ -7,6 +7,7 @@ import com.example.SearchYelpResQuery
 import com.example.restaurant_search.R
 import com.example.restaurant_search.models.Restaurant
 
+// Shared View Model between Activity and Fragments to handle communication and navigation
 class NavigationViewModel : ViewModel() {
 
     val fragmentId = MutableLiveData<Int>((R.layout.fragment_restaurant_list))
@@ -14,7 +15,7 @@ class NavigationViewModel : ViewModel() {
     var userLocation: Location? = null
 
 
-    fun updateFragment(id: Int, restaurant: SearchYelpResQuery.Business?) {
+    fun updateFragment(id: Int, restaurant: SearchYelpResQuery.Business? = null) {
 
         if (restaurant == null) {
             selectedRestaurant = null

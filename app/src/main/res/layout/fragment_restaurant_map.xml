@@ -76,7 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/layout_restaurant_details"
-            tools:context="com.example.restaurant_search.RestaurantMapFragment" />
+            tools:context="com.example.restaurant_search.views.RestaurantMapFragment" />
 
     </RelativeLayout>
 

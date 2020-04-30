@@ -7,10 +7,13 @@ import com.apollographql.apollo.ApolloCall
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.exception.ApolloException
 import com.example.SearchYelpResQuery
-import com.example.restaurant_search.shared.SharedApolloClient
+import com.example.restaurant_search.networking.SharedApolloClient
 
 class RestaurantListViewModel() : ViewModel() {
 
+    // Would be nicer to create a wrapper for these that handles result with
+    // diff types - ie: result.data, result.error etc. but went with simpler
+    // approach for simplicity sake
     val restaurants: MutableLiveData<MutableList<SearchYelpResQuery.Business?>> = MutableLiveData()
     val error = MutableLiveData<Exception>()
 
@@ -32,7 +35,8 @@ class RestaurantListViewModel() : ViewModel() {
             }
 
             override fun onFailure(e: ApolloException) {
-                Log.d("", "${e.localizedMessage.toString()}")
+                Log.d("apollo_exception", "Apollo request failed with exception: $e")
+                error.postValue(e)
 
             }
 
