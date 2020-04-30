@@ -1,5 +1,5 @@
 query SearchYelpResQuery($restaurantType: String!, $latitude: Float!, $longitude: Float!) {
-    search(term: $restaurantType, latitude: $latitude, longitude: $longitude) {
+    search(term: $restaurantType, latitude: $latitude, longitude: $longitude, radius: 19312) {
         business {
             name
             price

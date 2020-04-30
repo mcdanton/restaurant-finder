@@ -1,4 +1,4 @@
-package com.example.restaurant_search
+package com.example.restaurant_search.views
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
+import com.example.restaurant_search.R
 import com.example.restaurant_search.databinding.FragmentRestaurantMapBinding
 import com.example.restaurant_search.view_models.NavigationViewModel
 import com.example.restaurant_search.view_models.RestaurantViewModel
@@ -34,6 +35,7 @@ class RestaurantMapFragment: Fragment(), OnMapReadyCallback {
             ViewModelProvider(this).get(NavigationViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
 
+        // Ensured restaurant can't be null in previous fragment
         viewModel = RestaurantViewModel(navigationViewModel.selectedRestaurant!!)
 
     }
@@ -42,6 +44,7 @@ class RestaurantMapFragment: Fragment(), OnMapReadyCallback {
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
+        // Used binding here. Would likely update List Frag to use binding too in future.
         binding = FragmentRestaurantMapBinding.inflate(inflater, container, false)
 
         binding.lifecycleOwner = this
@@ -54,8 +57,8 @@ class RestaurantMapFragment: Fragment(), OnMapReadyCallback {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val fm: FragmentManager = childFragmentManager
-        supportMapFragment = fm.findFragmentById(R.id.map) as SupportMapFragment
+        val fragmentManager = childFragmentManager
+        supportMapFragment = fragmentManager.findFragmentById(R.id.map) as SupportMapFragment
 
         supportMapFragment.getMapAsync(this)
 
@@ -67,6 +70,7 @@ class RestaurantMapFragment: Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(map: GoogleMap) {
 
+        // Don't really need null checks but with async call it's always safer
         navigationViewModel.selectedRestaurant?.let {
 
             if (it.latitude != null && it.longitude != null) {
@@ -84,6 +88,5 @@ class RestaurantMapFragment: Fragment(), OnMapReadyCallback {
     }
 
     //endregion MapSetup
-
 
 }

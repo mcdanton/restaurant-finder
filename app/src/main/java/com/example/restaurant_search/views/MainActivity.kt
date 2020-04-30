@@ -1,4 +1,4 @@
-package com.example.restaurant_search
+package com.example.restaurant_search.views
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.restaurant_search.R
 import com.example.restaurant_search.view_models.NavigationViewModel
 
 
@@ -22,13 +23,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {
-
             navigationViewModel = ViewModelProvider(this).get(NavigationViewModel::class.java)
 
+            // Allows fragments to easily pass in fragment id for
+            // Main Activity to access
             navigationViewModel.fragmentId.observe(this, Observer {
                 replaceFragment(it, navigationViewModel.selectedRestaurant?.name)
             })
-
         }
 
     }
@@ -37,18 +38,20 @@ class MainActivity : AppCompatActivity() {
 
     //region Event Handling
 
+    // Handles back button from RestaurantMapFragment
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item?.itemId == android.R.id.home) {
-            navigationViewModel.updateFragment(R.layout.fragment_restaurant_list, null)
+        if (item.itemId == android.R.id.home) {
+            navigationViewModel.updateFragment(R.layout.fragment_restaurant_list)
             return true
         }
 
         return super.onOptionsItemSelected(item)
     }
 
+    // Only handle back press from MapFrag
     override fun onBackPressed() {
         if (navigationViewModel.fragmentId.value == R.layout.fragment_restaurant_map) {
-            navigationViewModel.updateFragment(R.layout.fragment_restaurant_list, null)
+            navigationViewModel.updateFragment(R.layout.fragment_restaurant_list)
             super.onBackPressed()
         }
     }

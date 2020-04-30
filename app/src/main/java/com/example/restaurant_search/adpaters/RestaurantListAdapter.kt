@@ -1,10 +1,11 @@
-package com.example.restaurant_search
+package com.example.restaurant_search.adpaters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.SearchYelpResQuery
+import com.example.restaurant_search.R
 import kotlinx.android.synthetic.main.item_restaurant.view.*
 
 class RestaurantListAdapter(
@@ -19,7 +20,9 @@ class RestaurantListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantListViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val itemView = layoutInflater.inflate(R.layout.item_restaurant, parent, false)
-        return RestaurantListViewHolder(itemView)
+        return RestaurantListViewHolder(
+            itemView
+        )
     }
 
     override fun onBindViewHolder(holder: RestaurantListViewHolder, position: Int) {
