@@ -74,7 +74,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        supportFragmentManager.popBackStack(this::class.java.simpleName, 0)
         supportFragmentManager
             .beginTransaction().apply {
                 replace(R.id.main, fragment)
