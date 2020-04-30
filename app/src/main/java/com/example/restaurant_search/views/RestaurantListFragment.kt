@@ -61,7 +61,6 @@ class RestaurantListFragment : Fragment() {
 
         recyclerView = view.findViewById<RecyclerView>(R.id.restaurant_list_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(activity!!)
-        recyclerView.adapter = RestaurantListAdapter(mutableListOf())
 
         return view
 
@@ -101,17 +100,28 @@ class RestaurantListFragment : Fragment() {
         }
 
 
-        viewModel.restaurants.observe(viewLifecycleOwner, Observer {
+        viewModel.restaurants.observe(viewLifecycleOwner, Observer { restaurants ->
 
             activity!!.runOnUiThread {
 
                 Log.d("user_location", "User Location is lat: ${navigationViewModel.userLocation?.latitude}, long: ${navigationViewModel.userLocation?.longitude}")
 
-                recyclerView.adapter = RestaurantListAdapter(it, ::showRestaurantMap)
-                adapter?.notifyDataSetChanged()
+                if (adapter == null)
+                    adapter = RestaurantListAdapter(
+                        restaurantListResults = restaurants,
+                        onItemClick = ::showRestaurantMap
+                    )
+
+                if (recyclerView.adapter == null)
+                    recyclerView.adapter = adapter
+
+                adapter?.apply {
+                    restaurantListResults = restaurants
+                    notifyDataSetChanged()
+                }
 
                 // Show message to user if no restaurants are found
-                if(it.isNullOrEmpty())
+                if(restaurants.isNullOrEmpty())
                     layout_no_restaurants_found.visibility = View.VISIBLE
                 else
                     layout_no_restaurants_found.visibility = View.GONE
