@@ -7,9 +7,10 @@ Burrito Buddy (trademark pending) searches Yelp for restaurants that serve burri
 ## Getting Started
 
 1. Clone Repository from Github
-2. Be sure to run on a phone so it can get your real location. If you must use an emulator be sure to enable the location feature.
-3. Run the app and accept location permission prompt.
-4. Find and enjoy some burritos.
+2. Rename sample.apikeys.properties file to apikeys.properties and put your api keys in it. 
+3. Be sure to run on a phone so it can get your real location. If you must use an emulator be sure to enable the location feature.
+4. Run the app and accept location permission prompt.
+5. Find and enjoy some burritos.
 
 ## App Architecture
 
@@ -39,12 +40,4 @@ This app utilizes an MVVM design pattern with a single activity and multiple fra
 5. Add in loader while data is being fetched
 6. Create shared, styled alert dialog
 7. Add in tests
-
-## Authors
-
-**Dan Hefter**
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
